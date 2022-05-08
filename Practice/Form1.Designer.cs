@@ -33,14 +33,19 @@
             this.idDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.nameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ageDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.namesconBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.praktikaDataSet = new Practice.PraktikaDataSet();
             this.namesconBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
+            this.praktikaDataSet = new Practice.PraktikaDataSet();
+            this.namesconBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.names_conTableAdapter1 = new Practice.PraktikaDataSetTableAdapters.names_conTableAdapter();
+            this.txtName = new System.Windows.Forms.TextBox();
+            this.txtAge = new System.Windows.Forms.TextBox();
+            this.button1 = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.namesconBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.praktikaDataSet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.namesconBindingSource1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.praktikaDataSet)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.namesconBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // dataGridView1
@@ -77,34 +82,84 @@
             this.ageDataGridViewTextBoxColumn.HeaderText = "age";
             this.ageDataGridViewTextBoxColumn.Name = "ageDataGridViewTextBoxColumn";
             // 
-            // praktikaDataSet
-            // 
-            this.praktikaDataSet.DataSetName = "PraktikaDataSet";
-            this.praktikaDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
             // namesconBindingSource1
             // 
             this.namesconBindingSource1.DataMember = "names_con";
             this.namesconBindingSource1.DataSource = this.praktikaDataSet;
             // 
+            // praktikaDataSet
+            // 
+            this.praktikaDataSet.DataSetName = "PraktikaDataSet";
+            this.praktikaDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
+            // 
             // names_conTableAdapter1
             // 
             this.names_conTableAdapter1.ClearBeforeFill = true;
+            // 
+            // txtName
+            // 
+            this.txtName.Location = new System.Drawing.Point(12, 262);
+            this.txtName.Name = "txtName";
+            this.txtName.Size = new System.Drawing.Size(100, 20);
+            this.txtName.TabIndex = 1;
+            // 
+            // txtAge
+            // 
+            this.txtAge.Location = new System.Drawing.Point(118, 262);
+            this.txtAge.Name = "txtAge";
+            this.txtAge.Size = new System.Drawing.Size(100, 20);
+            this.txtAge.TabIndex = 2;
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(224, 260);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 3;
+            this.button1.Text = "Submit";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(44, 246);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(35, 13);
+            this.label1.TabIndex = 4;
+            this.label1.Text = "Name";
+            this.label1.Click += new System.EventHandler(this.label1_Click);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(152, 246);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(26, 13);
+            this.label2.TabIndex = 5;
+            this.label2.Text = "Age";
+            this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.button1);
+            this.Controls.Add(this.txtAge);
+            this.Controls.Add(this.txtName);
             this.Controls.Add(this.dataGridView1);
             this.Name = "Form1";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.namesconBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.praktikaDataSet)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.namesconBindingSource1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.praktikaDataSet)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.namesconBindingSource)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -118,6 +173,11 @@
         private PraktikaDataSet praktikaDataSet;
         private System.Windows.Forms.BindingSource namesconBindingSource1;
         private PraktikaDataSetTableAdapters.names_conTableAdapter names_conTableAdapter1;
+        private System.Windows.Forms.TextBox txtName;
+        private System.Windows.Forms.TextBox txtAge;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
     }
 }
 
