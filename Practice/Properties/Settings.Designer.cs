@@ -33,5 +33,16 @@ namespace Practice.Properties {
                 return ((string)(this["Praktika_dataConnectionString"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=DESKTOP-GOUEP53\\SQLEXPRESS;Initial Catalog=Praktika;Integrated Securi" +
+            "ty=True")]
+        public string PraktikaConnectionString {
+            get {
+                return ((string)(this["PraktikaConnectionString"]));
+            }
+        }
     }
 }

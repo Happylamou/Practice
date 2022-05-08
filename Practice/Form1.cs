@@ -18,23 +18,29 @@ namespace Practice
             InitializeComponent();
         }
 
+/*
         private void Form1_Load(object sender, EventArgs e)
         {
-            // TODO: This line of code loads data into the 'praktika_dataDataSet.names_con' table. You can move, or remove it, as needed.
-            // done with datasource button on form
-            this.names_conTableAdapter.Fill(this.praktika_dataDataSet.names_con);
+            // TODO: This line of code loads data into the 'praktikaDataSet.names_con' table. You can move, or remove it, as needed.
+            this.names_conTableAdapter1.Fill(this.praktikaDataSet.names_con);
 
         }
-        // found on web, unsure if this is the way to insert data for practice
-        // https://www.c-sharpcorner.com/article/display-data-in-a-datagridview-C-Sharp-6/
-        /* private void Form1_Load(object sender, EventArgs e)
-         {
-             SqlDataAdapter da = new SqlDataAdapter("SELECT * FROM Student", "server = MCNDESKTOP33; database = Avinash; UID = sa; password = *******");
-             DataSet ds = new DataSet();
-             da.Fill(ds, "Student");
-             dataGridView1.DataSource = ds.Tables["Student"].DefaultView;
-         }
-        */
+ */
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            var select = "SELECT * FROM names_con";
+            var c = new SqlConnection("server = DESKTOP-GOUEP53\\SQLEXPRESS; database = Praktika; User Id = potato; password = 123"); // Your Connection String here
+            var dataAdapter = new SqlDataAdapter(select, c);
+
+            var commandBuilder = new SqlCommandBuilder(dataAdapter);
+            var ds = new DataSet();
+            dataAdapter.Fill(ds);
+            dataGridView1.ReadOnly = true;
+            dataGridView1.DataSource = ds.Tables[0];
+
+        }
+        
+
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
