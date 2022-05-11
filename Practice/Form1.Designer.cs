@@ -47,10 +47,14 @@
             this.textId = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.dataGridView2 = new System.Windows.Forms.DataGridView();
+            this.btn_ExcelUp = new System.Windows.Forms.Button();
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.namesconBindingSource1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.praktikaDataSet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.namesconBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
             this.SuspendLayout();
             // 
             // dataGridView1
@@ -62,7 +66,7 @@
             this.nameDataGridViewTextBoxColumn,
             this.ageDataGridViewTextBoxColumn});
             this.dataGridView1.DataSource = this.namesconBindingSource1;
-            this.dataGridView1.Location = new System.Drawing.Point(445, 177);
+            this.dataGridView1.Location = new System.Drawing.Point(12, 177);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridView1.Size = new System.Drawing.Size(343, 261);
@@ -105,21 +109,21 @@
             // 
             // txtName
             // 
-            this.txtName.Location = new System.Drawing.Point(442, 48);
+            this.txtName.Location = new System.Drawing.Point(9, 48);
             this.txtName.Name = "txtName";
             this.txtName.Size = new System.Drawing.Size(100, 20);
             this.txtName.TabIndex = 1;
             // 
             // txtAge
             // 
-            this.txtAge.Location = new System.Drawing.Point(442, 97);
+            this.txtAge.Location = new System.Drawing.Point(9, 97);
             this.txtAge.Name = "txtAge";
             this.txtAge.Size = new System.Drawing.Size(100, 20);
             this.txtAge.TabIndex = 2;
             // 
             // btn_Insert
             // 
-            this.btn_Insert.Location = new System.Drawing.Point(548, 148);
+            this.btn_Insert.Location = new System.Drawing.Point(115, 148);
             this.btn_Insert.Name = "btn_Insert";
             this.btn_Insert.Size = new System.Drawing.Size(75, 23);
             this.btn_Insert.TabIndex = 3;
@@ -130,7 +134,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(474, 32);
+            this.label1.Location = new System.Drawing.Point(41, 32);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(35, 13);
             this.label1.TabIndex = 4;
@@ -140,7 +144,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(476, 81);
+            this.label2.Location = new System.Drawing.Point(43, 81);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(26, 13);
             this.label2.TabIndex = 5;
@@ -149,7 +153,7 @@
             // 
             // btn_Update
             // 
-            this.btn_Update.Location = new System.Drawing.Point(710, 148);
+            this.btn_Update.Location = new System.Drawing.Point(277, 148);
             this.btn_Update.Name = "btn_Update";
             this.btn_Update.Size = new System.Drawing.Size(75, 23);
             this.btn_Update.TabIndex = 6;
@@ -159,7 +163,7 @@
             // 
             // btn_Delete
             // 
-            this.btn_Delete.Location = new System.Drawing.Point(629, 148);
+            this.btn_Delete.Location = new System.Drawing.Point(196, 148);
             this.btn_Delete.Name = "btn_Delete";
             this.btn_Delete.Size = new System.Drawing.Size(75, 23);
             this.btn_Delete.TabIndex = 7;
@@ -169,7 +173,7 @@
             // 
             // textId
             // 
-            this.textId.Location = new System.Drawing.Point(442, 148);
+            this.textId.Location = new System.Drawing.Point(9, 148);
             this.textId.Name = "textId";
             this.textId.Size = new System.Drawing.Size(100, 20);
             this.textId.TabIndex = 8;
@@ -179,7 +183,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(476, 132);
+            this.label3.Location = new System.Drawing.Point(43, 132);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(16, 13);
             this.label3.TabIndex = 9;
@@ -191,11 +195,36 @@
             this.contextMenuStrip1.Name = "contextMenuStrip1";
             this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
             // 
+            // dataGridView2
+            // 
+            this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView2.Location = new System.Drawing.Point(370, 177);
+            this.dataGridView2.Name = "dataGridView2";
+            this.dataGridView2.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dataGridView2.Size = new System.Drawing.Size(418, 261);
+            this.dataGridView2.TabIndex = 10;
+            // 
+            // btn_ExcelUp
+            // 
+            this.btn_ExcelUp.Location = new System.Drawing.Point(543, 145);
+            this.btn_ExcelUp.Name = "btn_ExcelUp";
+            this.btn_ExcelUp.Size = new System.Drawing.Size(75, 23);
+            this.btn_ExcelUp.TabIndex = 11;
+            this.btn_ExcelUp.Text = "button1";
+            this.btn_ExcelUp.UseVisualStyleBackColor = true;
+            this.btn_ExcelUp.Click += new System.EventHandler(this.btn_ExcelUp_Click);
+            // 
+            // openFileDialog1
+            // 
+            this.openFileDialog1.FileName = "openFileDialog1";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.btn_ExcelUp);
+            this.Controls.Add(this.dataGridView2);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.textId);
             this.Controls.Add(this.btn_Delete);
@@ -213,6 +242,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.namesconBindingSource1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.praktikaDataSet)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.namesconBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -238,6 +268,9 @@
         private System.Windows.Forms.TextBox textId;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private System.Windows.Forms.DataGridView dataGridView2;
+        private System.Windows.Forms.Button btn_ExcelUp;
+        private System.Windows.Forms.OpenFileDialog openFileDialog1;
     }
 }
 
