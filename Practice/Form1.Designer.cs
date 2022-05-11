@@ -46,6 +46,7 @@
             this.btn_Delete = new System.Windows.Forms.Button();
             this.textId = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.namesconBindingSource1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.praktikaDataSet)).BeginInit();
@@ -63,8 +64,10 @@
             this.dataGridView1.DataSource = this.namesconBindingSource1;
             this.dataGridView1.Location = new System.Drawing.Point(445, 177);
             this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridView1.Size = new System.Drawing.Size(343, 261);
             this.dataGridView1.TabIndex = 0;
+            this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
             // idDataGridViewTextBoxColumn
@@ -170,6 +173,8 @@
             this.textId.Name = "textId";
             this.textId.Size = new System.Drawing.Size(100, 20);
             this.textId.TabIndex = 8;
+            this.textId.TextChanged += new System.EventHandler(this.textId_TextChanged);
+            this.textId.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textId_KeyPress_1);
             // 
             // label3
             // 
@@ -180,6 +185,11 @@
             this.label3.TabIndex = 9;
             this.label3.Text = "Id";
             this.label3.Click += new System.EventHandler(this.label3_Click);
+            // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
             // 
             // Form1
             // 
@@ -227,6 +237,7 @@
         private System.Windows.Forms.Button btn_Delete;
         private System.Windows.Forms.TextBox textId;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
     }
 }
 

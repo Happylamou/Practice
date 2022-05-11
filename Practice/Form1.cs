@@ -16,6 +16,7 @@ namespace Practice
         SqlConnection con = new SqlConnection(@"server = DESKTOP-GOUEP53\SQLEXPRESS; database = Praktika; User Id = potato; password = 123");
         SqlCommand cmd;
         SqlDataAdapter adapt;
+
         public Form1()
         {
             InitializeComponent();
@@ -117,7 +118,7 @@ namespace Practice
         }
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-
+            
         }
 
         private void label2_Click(object sender, EventArgs e)
@@ -141,5 +142,44 @@ namespace Practice
         }
 
 
+        private void textId_KeyPress_1(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && (e.KeyChar != '.'))
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            string msg = String.Format("Row: {0}, Column: {1}",
+                dataGridView1.CurrentCell.RowIndex,
+                dataGridView1.CurrentCell.ColumnIndex);
+
+            txtName.Text = dataGridView1[1, e.RowIndex].Value.ToString();
+            txtAge.Text = dataGridView1[2, e.RowIndex].Value.ToString();
+            textId.Text = dataGridView1[0, e.RowIndex].Value.ToString();
+        }
+
+        private void textId_TextChanged(object sender, EventArgs e)
+        {
+            String searchValue = textId.Text;
+            int rowIndex = -1;
+            foreach (DataGridViewRow row in dataGridView1.Rows)
+            {
+                if (row.Cells[0].Value != null)
+                {
+                    if (row.Cells[0].Value.ToString().Equals(searchValue))
+                    {
+
+                        rowIndex = row.Index;
+                        txtName.Text = dataGridView1[1, row.Index].Value.ToString();
+                        txtAge.Text = dataGridView1[2, row.Index].Value.ToString();
+                        textId.Text = dataGridView1[0, row.Index].Value.ToString();
+                        break;
+                    }
+                }
+            }
+        }
     }
 }
