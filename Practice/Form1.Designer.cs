@@ -50,6 +50,7 @@
             this.dataGridView2 = new System.Windows.Forms.DataGridView();
             this.btn_ExcelUp = new System.Windows.Forms.Button();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.expBtn = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.namesconBindingSource1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.praktikaDataSet)).BeginInit();
@@ -218,11 +219,22 @@
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             // 
+            // expBtn
+            // 
+            this.expBtn.Location = new System.Drawing.Point(196, 97);
+            this.expBtn.Name = "expBtn";
+            this.expBtn.Size = new System.Drawing.Size(75, 23);
+            this.expBtn.TabIndex = 12;
+            this.expBtn.Text = "Export";
+            this.expBtn.UseVisualStyleBackColor = true;
+            this.expBtn.Click += new System.EventHandler(this.expBtn_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.expBtn);
             this.Controls.Add(this.btn_ExcelUp);
             this.Controls.Add(this.dataGridView2);
             this.Controls.Add(this.label3);
@@ -271,6 +283,7 @@
         private System.Windows.Forms.DataGridView dataGridView2;
         private System.Windows.Forms.Button btn_ExcelUp;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
+        private System.Windows.Forms.Button expBtn;
     }
 }
 
