@@ -51,11 +51,15 @@
             this.btn_ExcelUp = new System.Windows.Forms.Button();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.expBtn = new System.Windows.Forms.Button();
+            this.dataGridView3 = new System.Windows.Forms.DataGridView();
+            this.label4 = new System.Windows.Forms.Label();
+            this.excSearch = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.namesconBindingSource1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.praktikaDataSet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.namesconBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).BeginInit();
             this.SuspendLayout();
             // 
             // dataGridView1
@@ -199,15 +203,15 @@
             // dataGridView2
             // 
             this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView2.Location = new System.Drawing.Point(370, 177);
+            this.dataGridView2.Location = new System.Drawing.Point(358, 48);
             this.dataGridView2.Name = "dataGridView2";
             this.dataGridView2.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView2.Size = new System.Drawing.Size(418, 261);
+            this.dataGridView2.Size = new System.Drawing.Size(418, 127);
             this.dataGridView2.TabIndex = 10;
             // 
             // btn_ExcelUp
             // 
-            this.btn_ExcelUp.Location = new System.Drawing.Point(543, 145);
+            this.btn_ExcelUp.Location = new System.Drawing.Point(531, 16);
             this.btn_ExcelUp.Name = "btn_ExcelUp";
             this.btn_ExcelUp.Size = new System.Drawing.Size(75, 23);
             this.btn_ExcelUp.TabIndex = 11;
@@ -229,11 +233,41 @@
             this.expBtn.UseVisualStyleBackColor = true;
             this.expBtn.Click += new System.EventHandler(this.expBtn_Click);
             // 
+            // dataGridView3
+            // 
+            this.dataGridView3.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView3.Location = new System.Drawing.Point(865, 240);
+            this.dataGridView3.Name = "dataGridView3";
+            this.dataGridView3.Size = new System.Drawing.Size(410, 198);
+            this.dataGridView3.TabIndex = 13;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(1029, 224);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(74, 13);
+            this.label4.TabIndex = 14;
+            this.label4.Text = "Search results";
+            // 
+            // excSearch
+            // 
+            this.excSearch.Location = new System.Drawing.Point(1032, 177);
+            this.excSearch.Name = "excSearch";
+            this.excSearch.Size = new System.Drawing.Size(75, 23);
+            this.excSearch.TabIndex = 15;
+            this.excSearch.Text = "button1";
+            this.excSearch.UseVisualStyleBackColor = true;
+            this.excSearch.Click += new System.EventHandler(this.excSearch_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(1287, 511);
+            this.Controls.Add(this.excSearch);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.dataGridView3);
             this.Controls.Add(this.expBtn);
             this.Controls.Add(this.btn_ExcelUp);
             this.Controls.Add(this.dataGridView2);
@@ -255,6 +289,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.praktikaDataSet)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.namesconBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -284,6 +319,9 @@
         private System.Windows.Forms.Button btn_ExcelUp;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.Button expBtn;
+        private System.Windows.Forms.DataGridView dataGridView3;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Button excSearch;
     }
 }
 

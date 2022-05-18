@@ -10,7 +10,9 @@ using System.Windows.Forms;
 using System.Data.SqlClient;
 using System.Runtime.InteropServices;
 using System.Diagnostics;
-
+using Excel = Microsoft.Office.Interop.Excel;
+using System.IO;
+using System.Text;
 
 namespace Practice
 {
@@ -19,6 +21,8 @@ namespace Practice
         SqlConnection con = new SqlConnection(@"server = DESKTOP-GOUEP53\SQLEXPRESS; database = Praktika; User Id = potato; password = 123");
         SqlCommand cmd;
         SqlDataAdapter adapt;
+
+
 
         public Form1()
         {
@@ -186,16 +190,16 @@ namespace Practice
             }
         }
         //https://www.freecodespot.com/blog/csharp-import-excel/
-        
+
         private void btn_ExcelUp_Click(object sender, EventArgs e)
         {
             string file = ""; //variable for the Excel File Location
-            DataTable dtex = new DataTable(); 
+            DataTable dtex = new DataTable();
             DataRow row;
             DialogResult result = openFileDialog1.ShowDialog();
-            if (result == DialogResult.OK) 
+            if (result == DialogResult.OK)
             {
-                file = openFileDialog1.FileName; 
+                file = openFileDialog1.FileName;
                 try
                 {
                     Microsoft.Office.Interop.Excel.Application excApp = new Microsoft.Office.Interop.Excel.Application();
@@ -203,8 +207,8 @@ namespace Practice
                     Microsoft.Office.Interop.Excel._Worksheet ws = wb.Sheets[1];
                     Microsoft.Office.Interop.Excel.Range excRange = ws.UsedRange;
 
-                    int rowCount = excRange.Rows.Count; 
-                    int colCount = 3; 
+                    int rowCount = excRange.Rows.Count;
+                    int colCount = 3;
                     // get column name
                     for (int i = 1; i <= rowCount; i++)
                     {
@@ -217,12 +221,12 @@ namespace Practice
 
                     //get row data
 
-                    int rowCounter; 
-                    for (int i = 2; i <= rowCount; i++) 
+                    int rowCounter;
+                    for (int i = 2; i <= rowCount; i++)
                     {
-                        row = dtex.NewRow(); 
+                        row = dtex.NewRow();
                         rowCounter = 0;
-                        for (int j = 1; j <= colCount; j++) 
+                        for (int j = 1; j <= colCount; j++)
                         {
 
                             //check if cell empty
@@ -239,7 +243,7 @@ namespace Practice
                         dtex.Rows.Add(row); //add row to DataTable
                     }
 
-                    dataGridView2.DataSource = dtex; 
+                    dataGridView2.DataSource = dtex;
 
                     //close and clean excel process
                     GC.Collect();
@@ -262,12 +266,12 @@ namespace Practice
         private void expBtn_Click(object sender, EventArgs e)
         {
 
-            
+
 
             Microsoft.Office.Interop.Excel._Application app = new Microsoft.Office.Interop.Excel.Application();
             Microsoft.Office.Interop.Excel._Workbook workbook = app.Workbooks.Add(Type.Missing);
             Microsoft.Office.Interop.Excel._Worksheet worksheet = null;
-                             
+
             app.Visible = false;
             worksheet = workbook.Sheets[1];
             worksheet = workbook.ActiveSheet;
@@ -277,7 +281,7 @@ namespace Practice
             {
                 worksheet.Cells[1, i] = dataGridView1.Columns[i - 1].HeaderText;
             }
-           //column, row values to xlsx
+            //column, row values to xlsx
             for (int i = 0; i < dataGridView1.Rows.Count - 1; i++)
             {
                 for (int j = 0; j < dataGridView1.Columns.Count; j++)
@@ -294,9 +298,98 @@ namespace Practice
             saveFileDialog1.ShowDialog();
 
             workbook.SaveAs(this.Text = saveFileDialog1.FileName, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Microsoft.Office.Interop.Excel.XlSaveAsAccessMode.xlExclusive, Type.Missing, Type.Missing, Type.Missing, Type.Missing);
-            
+
             app.Quit();
         }
-    }
 
+        private void excSearch_Click(object sender, EventArgs e)
+        {
+            string file = ""; //variable for the Excel File Location
+            DataTable dtex = new DataTable();
+            DataRow row;
+            dataGridView1.Columns.Add("Name", "Age");
+            DialogResult result = openFileDialog1.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                file = openFileDialog1.FileName;
+                try
+                {
+                    Excel.Application excApp = new Excel.Application();
+                    Excel.Workbook wb = excApp.Workbooks.Open(file);
+                    Excel._Worksheet ws = wb.Sheets[1];
+                    Excel.Range excRange = ws.UsedRange;
+
+                    int rowCount = excRange.Rows.Count;
+                    int colCount = excRange.Columns.Count;
+
+                    int[] array1 = new int[3];
+
+                    for (int i = 0; i < dataGridView1.Rows.Count; i++)
+                    {
+                        array1[i] = dataGridView1.Rows[i].Cells[3].Value.ToString().Trim();
+                    }
+                    
+                }
+                catch { }
+            }
+        }
+    }
 }
+/*
+//---
+string file = ""; //variable for the Excel File Location
+DataTable dtex = new DataTable();
+DataRow row;
+dataGridView1.Columns.Add("Name", "Age");
+DialogResult result = openFileDialog1.ShowDialog();
+if (result == DialogResult.OK)
+{
+    file = openFileDialog1.FileName;
+    try
+    {
+        Excel.Application excApp = new Excel.Application();
+        Excel.Workbook wb = excApp.Workbooks.Open(file);
+        Excel._Worksheet ws = wb.Sheets[1];
+        Excel.Range excRange = ws.UsedRange;
+
+        int rowCount = excRange.Rows.Count;
+        int colCount = excRange.Columns.Count;
+
+        int rowCounter;
+        //get row data
+        foreach (DataGridViewRow dtRow in dataGridView1.Rows)
+        {
+            for (int i = 1; i <= colCount; i++)
+            {
+                row = dtex.NewRow();
+                rowCounter = 0;
+                for (int j = 1; j <= rowCount; j++)
+                {
+                    if (excRange.Cells[i, j] != null && excRange.Cells[i, j].Value2 != null)
+                    {
+                        if (excRange.Cells[i, j].Value2.ToString() == (string)dtRow.Cells["name"].Value)
+                        {
+                            row[rowCounter] = excRange.Cells[i, j].Value2.ToString();
+                            //dtex.Rows.Add(excRange.Cells[i, j].Value2.ToString());
+                            //dataGridView3.Rows.Add(row);
+
+                        }
+                    }
+                    rowCounter++;
+                }
+                dtex.Rows.Add(row);
+            }
+        }
+        dataGridView3.DataSource = dtex;
+
+        wb.Close();
+        excApp.Quit();
+    }
+    catch (Exception ex)
+    {
+        MessageBox.Show(ex.Message);
+    }
+    //---
+}
+*/
+
