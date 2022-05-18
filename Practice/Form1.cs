@@ -261,13 +261,15 @@ namespace Practice
 
         private void expBtn_Click(object sender, EventArgs e)
         {
+
             
+
             Microsoft.Office.Interop.Excel._Application app = new Microsoft.Office.Interop.Excel.Application();
             Microsoft.Office.Interop.Excel._Workbook workbook = app.Workbooks.Add(Type.Missing);
             Microsoft.Office.Interop.Excel._Worksheet worksheet = null;
-                         
-            app.Visible = true;
-            worksheet = workbook.Sheets["Sheet1"];
+                             
+            app.Visible = false;
+            worksheet = workbook.Sheets[1];
             worksheet = workbook.ActiveSheet;
             worksheet.Name = "Exported from gridview";
             //header values to xlsx
@@ -286,7 +288,12 @@ namespace Practice
             //https://stackoverflow.com/questions/41283098/export-from-datagridview-to-excel-border-around-data
 
             // saving the file  
-            workbook.SaveAs(@"C:\Users\Happylaama\Desktop\prac\output.xlsx", Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Microsoft.Office.Interop.Excel.XlSaveAsAccessMode.xlExclusive, Type.Missing, Type.Missing, Type.Missing, Type.Missing);
+            SaveFileDialog saveFileDialog1 = new SaveFileDialog();
+            saveFileDialog1.Filter = "Excel file|*.xlsx";
+            saveFileDialog1.Title = "Save Excel file";
+            saveFileDialog1.ShowDialog();
+
+            workbook.SaveAs(this.Text = saveFileDialog1.FileName, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Microsoft.Office.Interop.Excel.XlSaveAsAccessMode.xlExclusive, Type.Missing, Type.Missing, Type.Missing, Type.Missing);
             
             app.Quit();
         }
