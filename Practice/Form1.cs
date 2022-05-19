@@ -73,7 +73,7 @@ namespace Practice
             adapt = new SqlDataAdapter("select * from names_con", con);
             adapt.Fill(dt);
             dataGridView1.DataSource = dt;
-            con.Close();
+            con.Close();            
         }
 
         private void ClearData()
@@ -322,13 +322,13 @@ namespace Practice
                     int rowCount = excRange.Rows.Count;
                     int colCount = excRange.Columns.Count;
 
-                    int[] array1 = new int[3];
-
-                    for (int i = 0; i < dataGridView1.Rows.Count; i++)
+                    List<string> list = new List<string>();
+                    foreach (DataGridViewRow item in dataGridView1.Rows)
                     {
-                        array1[i] = dataGridView1.Rows[i].Cells[3].Value.ToString().Trim();
+                        list.Add(item.Cells[1].Value.ToString());
                     }
                     
+
                 }
                 catch { }
             }
