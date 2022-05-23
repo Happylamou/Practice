@@ -361,22 +361,23 @@ namespace Practice
                     var SrcColumn = 0;
                     var SrcRow = 0;
 
-                    for (int j = 0; j < column0Array.Length; j++) // counting incorectly in some cases, unsure of what causes it
+                    for (int j = 0; j < column0Array.Length; j++) // There is an empty record which doesn't get recorded, not sure where it is. It's likely the bottom empty row of DGV, dunno how to eliminate it.
                     {
                         string Arraytxt = column0Array[j];
-                        var results = excRange.Find(Arraytxt, LookAt: Excel.XlLookAt.xlWhole); 
-                        if (results != null) 
-                        { 
-                            SrcColumn = results.Column;
-                            SrcRow = results.Row;
-                            //found++;
-                        }
-                        else
-                        {
-                            MissingEntries[notFound] = Arraytxt;
-                            notFound++;
-                            continue;
-                        }
+                        var results = excRange.Find(Arraytxt, LookAt: Excel.XlLookAt.xlWhole);
+
+                            if (results != null && results.Value2 != null)
+                            {
+                                SrcColumn = results.Column;
+                                SrcRow = results.Row;
+                                //found++;
+                            }
+                            else
+                            {
+                                MissingEntries[notFound] = Arraytxt + "/missing";
+                                notFound++;
+                                continue;
+                            }
                         
 
                         //check if cell empty
@@ -396,6 +397,7 @@ namespace Practice
                         }
                         else
                         {
+                            MissingEntries[notFound] = Arraytxt + "/no data";
                             notFound++;
                             continue;
                         }
