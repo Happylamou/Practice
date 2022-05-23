@@ -313,25 +313,35 @@ namespace Practice
 
         private void excSearch_Click(object sender, EventArgs e)
         {
+
             string file = ""; //variable for the Excel File Location
             DataTable dtex = new DataTable();
             //DataRow row;
             dataGridView1.Columns.Add("Name", "Age");
             DialogResult result = openFileDialog1.ShowDialog();
 
-            string[] column0Array = new string[dataGridView1.Rows.Count];
+            string[] column0Array = new string[dataGridView1.RowCount]; // gets 3 records from DGV as well as the empty line
 
-            int i = 0;
+            int i = 0; /*
             foreach (DataGridViewRow DTrow in dataGridView1.Rows)
             {
                 column0Array[i] = DTrow.Cells[1].Value != null ? DTrow.Cells[1].Value.ToString().Trim() : string.Empty;
                 i++;
             }
-            string toDisplay = string.Join(Environment.NewLine, column0Array);
+            */
+            for (int p = 0; p < dataGridView1.RowCount; p++)
+            {
+                column0Array[i] = dataGridView1.Rows[p].Cells[1].Value != null ? dataGridView1.Rows[p].Cells[1].Value.ToString().Trim() : String.Empty;
+                i++;
+            }
+            string toDisplay = string.Join("+", column0Array);
             //MessageBox.Show(toDisplay);
 
 
-            
+            // -------------------------------------------------------------------------------- After 3rd result gets gets empty value, which i assume is the empty line at the bottom of DGV
+            // Ran into this while trying to fix System.IndexOutOfRangeException: 'Index was outside the bounds of the array.'
+
+
             if (result == DialogResult.OK)
             {
                 file = openFileDialog1.FileName;
@@ -347,13 +357,24 @@ namespace Practice
                     int found = 0;
                     int notFound = 0;
 
-                    for (int j = 0; j <= column0Array.Length; j++)
+                    string[] MissingEntries = new string[10];
+                    var SrcColumn = 0;
+                    var SrcRow = 0;
+
+                    for (int j = 0; j < column0Array.Length; j++)
                     {
                         string Arraytxt = column0Array[j];
                         var results = excRange.Find(Arraytxt, LookAt: Excel.XlLookAt.xlWhole);
-                        var SrcColumn = results.Column;
-                        var SrcRow = results.Row;
-
+                        if (results != null) 
+                        { 
+                            SrcColumn = results.Column;
+                            SrcRow = results.Row;
+                        }
+                        else
+                        {
+                            MissingEntries[notFound] = Arraytxt;
+                            notFound++;
+                        }
                         //int rowCounter;
 
                         //row = dtex.NewRow();
@@ -372,17 +393,18 @@ namespace Practice
                                 con.Close();
                                 //MessageBox.Show("Record Inserted Successfully");
                                 DisplayData2();
+                                found++;
                                 
                         }
-                        else
-                        {
-                            notFound++;
-                        }
+                        
                                            
 
-                        MessageBox.Show("row :" + SrcRow.ToString() + " Column:" + SrcColumn.ToString());
+                        //MessageBox.Show("row :" + SrcRow.ToString() + " Column:" + SrcColumn.ToString());
                     }
-                    MessageBox.Show(found + " records were found and " + notFound + " were not");
+                    // breaks here due to index out of range
+                    MessageBox.Show(found + " records were found and " + notFound + " were/was not");
+                    string DisplayMissing = string.Join("\n", MissingEntries);
+                    MessageBox.Show(DisplayMissing);
 
 
 

@@ -2,3 +2,6 @@
 
 # CS2001: Source file 'C:\Users\Happylaama\source\repos\Practice\Practice\Praktika_dataDataSet.Designer.cs' could not be found.
 dotnet_diagnostic.CS2001.severity = none
+
+# IDE1006: Naming Styles
+dotnet_diagnostic.IDE1006.severity = none
