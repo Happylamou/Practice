@@ -331,7 +331,7 @@ namespace Practice
             */
             for (int p = 0; p < dataGridView1.RowCount; p++)
             {
-                column0Array[i] = dataGridView1.Rows[p].Cells[1].Value != null ? dataGridView1.Rows[p].Cells[1].Value.ToString().Trim() : String.Empty;
+                column0Array[p] = dataGridView1.Rows[p].Cells[1].Value != null ? dataGridView1.Rows[p].Cells[1].Value.ToString().Trim() : String.Empty;
                 i++;
             }
             string toDisplay = string.Join("+", column0Array);
@@ -361,28 +361,27 @@ namespace Practice
                     var SrcColumn = 0;
                     var SrcRow = 0;
 
-                    for (int j = 0; j < column0Array.Length; j++)
+                    for (int j = 0; j < column0Array.Length; j++) // counting incorectly in some cases, unsure of what causes it
                     {
                         string Arraytxt = column0Array[j];
-                        var results = excRange.Find(Arraytxt, LookAt: Excel.XlLookAt.xlWhole);
+                        var results = excRange.Find(Arraytxt, LookAt: Excel.XlLookAt.xlWhole); 
                         if (results != null) 
                         { 
                             SrcColumn = results.Column;
                             SrcRow = results.Row;
+                            //found++;
                         }
                         else
                         {
                             MissingEntries[notFound] = Arraytxt;
                             notFound++;
+                            continue;
                         }
-                        //int rowCounter;
-
-                        //row = dtex.NewRow();
-                        //rowCounter = 0;
+                        
 
                         //check if cell empty
 
-                        if (excRange.Cells[SrcRow, SrcColumn + 1] != null && excRange.Cells[SrcRow, SrcColumn + 1].Value2 != null)
+                        if (excRange.Cells[SrcRow, SrcColumn + 1] != null && excRange.Cells[SrcRow, SrcColumn + 1].Value2 != null && excRange.Cells[SrcRow, SrcColumn].Value.ToString() == Arraytxt)
                         {
                                 cmd = new SqlCommand("insert into Results(name,age,date) values(@Name,@Age,@Date)", con);
                                 con.Open();
@@ -391,20 +390,23 @@ namespace Practice
                                 cmd.Parameters.AddWithValue("@Date", dateTimePicker1.Value.ToString());
                                 cmd.ExecuteNonQuery();
                                 con.Close();
-                                //MessageBox.Show("Record Inserted Successfully");
                                 DisplayData2();
                                 found++;
                                 
                         }
-                        
-                                           
+                        else
+                        {
+                            notFound++;
+                            continue;
+                        }
+                        //running into Microsoft.CSharp.RuntimeBinder.RuntimeBinderException with new file         
 
-                        //MessageBox.Show("row :" + SrcRow.ToString() + " Column:" + SrcColumn.ToString());
+                        //MessageBox.Show("row :" + SrcRow.ToString() + " Column:" + SrcColumn.ToString());   //coordinates display
                     }
                     // breaks here due to index out of range
                     MessageBox.Show(found + " records were found and " + notFound + " were/was not");
                     string DisplayMissing = string.Join("\n", MissingEntries);
-                    MessageBox.Show(DisplayMissing);
+                    MessageBox.Show("Missing records in xlsx: \n" + DisplayMissing);
 
 
 
