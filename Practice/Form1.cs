@@ -12,7 +12,6 @@ using System.Runtime.InteropServices;
 using System.Diagnostics;
 using Excel = Microsoft.Office.Interop.Excel;
 using System.IO;
-using System.Text;
 
 namespace Practice
 {
@@ -28,6 +27,7 @@ namespace Practice
         {
             InitializeComponent();
             DisplayData();
+            DisplayData2();
 
         }
 
@@ -73,7 +73,16 @@ namespace Practice
             adapt = new SqlDataAdapter("select * from names_con", con);
             adapt.Fill(dt);
             dataGridView1.DataSource = dt;
-            con.Close();            
+            con.Close();
+        }
+        private void DisplayData2()
+        {
+            con.Open();
+            DataTable dt = new DataTable();
+            adapt = new SqlDataAdapter("select * from Results", con);
+            adapt.Fill(dt);
+            dataGridView3.DataSource = dt;
+            con.Close();
         }
 
         private void ClearData()
@@ -306,9 +315,23 @@ namespace Practice
         {
             string file = ""; //variable for the Excel File Location
             DataTable dtex = new DataTable();
-            DataRow row;
+            //DataRow row;
             dataGridView1.Columns.Add("Name", "Age");
             DialogResult result = openFileDialog1.ShowDialog();
+
+            string[] column0Array = new string[dataGridView1.Rows.Count];
+
+            int i = 0;
+            foreach (DataGridViewRow DTrow in dataGridView1.Rows)
+            {
+                column0Array[i] = DTrow.Cells[1].Value != null ? DTrow.Cells[1].Value.ToString().Trim() : string.Empty;
+                i++;
+            }
+            string toDisplay = string.Join(Environment.NewLine, column0Array);
+            //MessageBox.Show(toDisplay);
+
+
+            
             if (result == DialogResult.OK)
             {
                 file = openFileDialog1.FileName;
@@ -321,75 +344,89 @@ namespace Practice
 
                     int rowCount = excRange.Rows.Count;
                     int colCount = excRange.Columns.Count;
+                    int found = 0;
+                    int notFound = 0;
 
-                    List<string> list = new List<string>();
-                    foreach (DataGridViewRow item in dataGridView1.Rows)
+                    for (int j = 0; j <= column0Array.Length; j++)
                     {
-                        list.Add(item.Cells[1].Value.ToString());
-                    }
-                    
+                        string Arraytxt = column0Array[j];
+                        var results = excRange.Find(Arraytxt, LookAt: Excel.XlLookAt.xlWhole);
+                        var SrcColumn = results.Column;
+                        var SrcRow = results.Row;
 
+                        //int rowCounter;
+
+                        //row = dtex.NewRow();
+                        //rowCounter = 0;
+
+                        //check if cell empty
+
+                        if (excRange.Cells[SrcRow, SrcColumn + 1] != null && excRange.Cells[SrcRow, SrcColumn + 1].Value2 != null)
+                        {
+                                cmd = new SqlCommand("insert into Results(name,age,date) values(@Name,@Age,@Date)", con);
+                                con.Open();
+                                cmd.Parameters.AddWithValue("@Name", excRange.Cells[SrcRow, SrcColumn].Value2.ToString());
+                                cmd.Parameters.AddWithValue("@Age", excRange.Cells[SrcRow, SrcColumn + 1].Value2.ToString());
+                                cmd.Parameters.AddWithValue("@Date", dateTimePicker1.Value.ToString());
+                                cmd.ExecuteNonQuery();
+                                con.Close();
+                                //MessageBox.Show("Record Inserted Successfully");
+                                DisplayData2();
+                                
+                        }
+                        else
+                        {
+                            notFound++;
+                        }
+                                           
+
+                        MessageBox.Show("row :" + SrcRow.ToString() + " Column:" + SrcColumn.ToString());
+                    }
+                    MessageBox.Show(found + " records were found and " + notFound + " were not");
+
+
+
+                    wb.Close();
+                    excApp.Quit();
                 }
                 catch { }
+                                
             }
+
         }
     }
 }
 /*
-//---
-string file = ""; //variable for the Excel File Location
-DataTable dtex = new DataTable();
-DataRow row;
-dataGridView1.Columns.Add("Name", "Age");
-DialogResult result = openFileDialog1.ShowDialog();
-if (result == DialogResult.OK)
-{
-    file = openFileDialog1.FileName;
-    try
-    {
-        Excel.Application excApp = new Excel.Application();
-        Excel.Workbook wb = excApp.Workbooks.Open(file);
-        Excel._Worksheet ws = wb.Sheets[1];
-        Excel.Range excRange = ws.UsedRange;
-
-        int rowCount = excRange.Rows.Count;
-        int colCount = excRange.Columns.Count;
-
-        int rowCounter;
-        //get row data
-        foreach (DataGridViewRow dtRow in dataGridView1.Rows)
-        {
-            for (int i = 1; i <= colCount; i++)
-            {
-                row = dtex.NewRow();
-                rowCounter = 0;
-                for (int j = 1; j <= rowCount; j++)
-                {
-                    if (excRange.Cells[i, j] != null && excRange.Cells[i, j].Value2 != null)
+ for (int j = 0; j <= column0Array.Length; j++)
                     {
-                        if (excRange.Cells[i, j].Value2.ToString() == (string)dtRow.Cells["name"].Value)
-                        {
-                            row[rowCounter] = excRange.Cells[i, j].Value2.ToString();
-                            //dtex.Rows.Add(excRange.Cells[i, j].Value2.ToString());
-                            //dataGridView3.Rows.Add(row);
+                        string Arraytxt = column0Array[j];
+                        var results = excRange.Find(Arraytxt, LookAt: Excel.XlLookAt.xlWhole);
+                        var SrcColumn = results.Column;
+                        var SrcRow = results.Row;
 
-                        }
+                        //int rowCounter;
+                        
+                            row = dtex.NewRow();
+                            rowCounter = 0;
+                            
+                                //check if cell empty
+                                
+                                if (excRange.Cells[SrcRow, SrcColumn+1] != null && excRange.Cells[SrcRow, SrcColumn+1].Value2 != null)
+                                {
+                                    row[rowCounter] = excRange.Cells[SrcRow, SrcColumn].Value.ToString();
+
+                                }
+                                else
+                                {
+                                    row[rowCounter] = "";
+                                }
+                               rowCounter++;
+                            
+                            dtex.Rows.Add(row); //add row to DataTable                     
+
+                        MessageBox.Show("row :" + SrcRow.ToString() + " Column:"+ SrcColumn.ToString());
                     }
-                    rowCounter++;
-                }
-                dtex.Rows.Add(row);
-            }
-        }
-        dataGridView3.DataSource = dtex;
+                    MessageBox.Show(found + " records were found and " + notFound + " were not");
 
-        wb.Close();
-        excApp.Quit();
-    }
-    catch (Exception ex)
-    {
-        MessageBox.Show(ex.Message);
-    }
-    //---
-}
-*/
 
+                    dataGridView3.DataSource = dtex; */

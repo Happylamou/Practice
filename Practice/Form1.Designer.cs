@@ -54,6 +54,7 @@
             this.dataGridView3 = new System.Windows.Forms.DataGridView();
             this.label4 = new System.Windows.Forms.Label();
             this.excSearch = new System.Windows.Forms.Button();
+            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.namesconBindingSource1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.praktikaDataSet)).BeginInit();
@@ -260,11 +261,19 @@
             this.excSearch.UseVisualStyleBackColor = true;
             this.excSearch.Click += new System.EventHandler(this.excSearch_Click);
             // 
+            // dateTimePicker1
+            // 
+            this.dateTimePicker1.Location = new System.Drawing.Point(968, 151);
+            this.dateTimePicker1.Name = "dateTimePicker1";
+            this.dateTimePicker1.Size = new System.Drawing.Size(200, 20);
+            this.dateTimePicker1.TabIndex = 16;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1287, 511);
+            this.Controls.Add(this.dateTimePicker1);
             this.Controls.Add(this.excSearch);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.dataGridView3);
@@ -322,6 +331,7 @@
         private System.Windows.Forms.DataGridView dataGridView3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button excSearch;
+        private System.Windows.Forms.DateTimePicker dateTimePicker1;
     }
 }
 
