@@ -236,10 +236,11 @@
             // 
             // dataGridView3
             // 
+            this.dataGridView3.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridView3.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView3.Location = new System.Drawing.Point(865, 240);
+            this.dataGridView3.Location = new System.Drawing.Point(639, 240);
             this.dataGridView3.Name = "dataGridView3";
-            this.dataGridView3.Size = new System.Drawing.Size(410, 198);
+            this.dataGridView3.Size = new System.Drawing.Size(636, 198);
             this.dataGridView3.TabIndex = 13;
             // 
             // label4

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -317,27 +318,39 @@ namespace Practice
             string file = ""; //variable for the Excel File Location
             DataTable dtex = new DataTable();
             //DataRow row;
-            dataGridView1.Columns.Add("Name", "Age");
             DialogResult result = openFileDialog1.ShowDialog();
 
             string[] column0Array = new string[dataGridView1.RowCount]; // gets 3 records from DGV as well as the empty line
 
-            int i = 0; /*
+            /*
             foreach (DataGridViewRow DTrow in dataGridView1.Rows)
             {
                 column0Array[i] = DTrow.Cells[1].Value != null ? DTrow.Cells[1].Value.ToString().Trim() : string.Empty;
                 i++;
             }
-            */
+            
             for (int p = 0; p < dataGridView1.RowCount; p++)
             {
                 column0Array[p] = dataGridView1.Rows[p].Cells[1].Value != null ? dataGridView1.Rows[p].Cells[1].Value.ToString().Trim() : String.Empty;
-                i++;
+                
             }
-            string toDisplay = string.Join("+", column0Array);
+            //string toDisplay = string.Join("+", column0Array);
             //MessageBox.Show(toDisplay);
+            */
+            //------------------------------------
 
 
+            SqlDataAdapter da = new SqlDataAdapter("select name from names_con", con);
+            DataSet ds = new DataSet();
+            da.Fill(ds, "names_con");
+
+            List<string> NameList = new List<string>();
+            foreach (DataRow row in ds.Tables["names_con"].Rows)
+            {
+                NameList.Add(row["name"].ToString().Trim());
+            }
+            string toDisplay = string.Join("+", NameList);
+            //MessageBox.Show(toDisplay);
             // -------------------------------------------------------------------------------- After 3rd result gets gets empty value, which i assume is the empty line at the bottom of DGV
             // Ran into this while trying to fix System.IndexOutOfRangeException: 'Index was outside the bounds of the array.'
 
@@ -351,7 +364,7 @@ namespace Practice
                     Excel.Workbook wb = excApp.Workbooks.Open(file);
                     Excel._Worksheet ws = wb.Sheets[1];
                     Excel.Range excRange = ws.UsedRange;
-
+                                        
                     int rowCount = excRange.Rows.Count;
                     int colCount = excRange.Columns.Count;
                     int found = 0;
@@ -361,9 +374,9 @@ namespace Practice
                     var SrcColumn = 0;
                     var SrcRow = 0;
 
-                    for (int j = 0; j < column0Array.Length; j++) // There is an empty record which doesn't get recorded, not sure where it is. It's likely the bottom empty row of DGV, dunno how to eliminate it.
+                    for (int j = 0; j < NameList.Count; j++) // There is an empty record which doesn't get recorded, not sure where it is. It's likely the bottom empty row of DGV, dunno how to eliminate it.
                     {
-                        string Arraytxt = column0Array[j];
+                        string Arraytxt = NameList[j];
                         var results = excRange.Find(Arraytxt, LookAt: Excel.XlLookAt.xlWhole);
 
                             if (results != null && results.Value2 != null)
@@ -381,19 +394,17 @@ namespace Practice
                         
 
                         //check if cell empty
-
                         if (excRange.Cells[SrcRow, SrcColumn + 1] != null && excRange.Cells[SrcRow, SrcColumn + 1].Value2 != null && excRange.Cells[SrcRow, SrcColumn].Value.ToString() == Arraytxt)
-                        {
-                                cmd = new SqlCommand("insert into Results(name,age,date) values(@Name,@Age,@Date)", con);
-                                con.Open();
-                                cmd.Parameters.AddWithValue("@Name", excRange.Cells[SrcRow, SrcColumn].Value2.ToString());
-                                cmd.Parameters.AddWithValue("@Age", excRange.Cells[SrcRow, SrcColumn + 1].Value2.ToString());
-                                cmd.Parameters.AddWithValue("@Date", dateTimePicker1.Value.ToString());
-                                cmd.ExecuteNonQuery();
-                                con.Close();
-                                DisplayData2();
-                                found++;
-                                
+                        {   //"IF NOT EXISTS (SELECT * FROM Results WHERE name = @Name) insert into Results(name,age,date) values(@Name,@Age,@Date) else update Results set age = @Age, date = @Date where name = @Name"
+                            cmd = new SqlCommand("IF EXISTS (SELECT * FROM Results WHERE name = @Name and age != @Age) update Results set age = @Age, date = @Date where name = @Name else insert into Results(name,age,date) values(@Name,@Age,@Date)", con);
+                                    con.Open();
+                                    cmd.Parameters.AddWithValue("@Name", excRange.Cells[SrcRow, SrcColumn].Value2.ToString());
+                                    cmd.Parameters.AddWithValue("@Age", excRange.Cells[SrcRow, SrcColumn + 1].Value2.ToString());
+                                    cmd.Parameters.AddWithValue("@Date", dateTimePicker1.Value.ToString());
+                                    cmd.ExecuteNonQuery();
+                                    con.Close();
+                                    DisplayData2();
+                                    found++;
                         }
                         else
                         {
@@ -401,6 +412,8 @@ namespace Practice
                             notFound++;
                             continue;
                         }
+
+
                         //running into Microsoft.CSharp.RuntimeBinder.RuntimeBinderException with new file         
 
                         //MessageBox.Show("row :" + SrcRow.ToString() + " Column:" + SrcColumn.ToString());   //coordinates display
@@ -422,37 +435,3 @@ namespace Practice
         }
     }
 }
-/*
- for (int j = 0; j <= column0Array.Length; j++)
-                    {
-                        string Arraytxt = column0Array[j];
-                        var results = excRange.Find(Arraytxt, LookAt: Excel.XlLookAt.xlWhole);
-                        var SrcColumn = results.Column;
-                        var SrcRow = results.Row;
-
-                        //int rowCounter;
-                        
-                            row = dtex.NewRow();
-                            rowCounter = 0;
-                            
-                                //check if cell empty
-                                
-                                if (excRange.Cells[SrcRow, SrcColumn+1] != null && excRange.Cells[SrcRow, SrcColumn+1].Value2 != null)
-                                {
-                                    row[rowCounter] = excRange.Cells[SrcRow, SrcColumn].Value.ToString();
-
-                                }
-                                else
-                                {
-                                    row[rowCounter] = "";
-                                }
-                               rowCounter++;
-                            
-                            dtex.Rows.Add(row); //add row to DataTable                     
-
-                        MessageBox.Show("row :" + SrcRow.ToString() + " Column:"+ SrcColumn.ToString());
-                    }
-                    MessageBox.Show(found + " records were found and " + notFound + " were not");
-
-
-                    dataGridView3.DataSource = dtex; */
